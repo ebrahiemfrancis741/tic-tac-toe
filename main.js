@@ -135,16 +135,13 @@ const UIManager = (function(){
     gameBoardElement.addEventListener("click", (e)=>{
       const cell = e.target;
       const cellIndex = cell.id.split("-")[1];
-      console.log("cell id: " + cell.id + " " + cellIndex);
       if( !gameBoard.isMarked(cellIndex)){
-        console.log("not marked");
+        gameBoard.grid[cellIndex] = Round.getCurrentPlayer().mark;
         cell.textContent = Round.getCurrentPlayer().mark;
-        console.log("before switch: " + Round.getCurrentPlayer().name + " " + Round.getCurrentPlayer().mark);
+        if(gameBoard.matchFound(Round.getCurrentPlayer())){
+          console.log(Round.getCurrentPlayer().name + " is the winner");
+        }
         Round.switchPlayer();
-        console.log("after switch: " + Round.getCurrentPlayer().name + " " + Round.getCurrentPlayer().mark);
-      }
-      else{
-        console.log("marked for some reason");
       }
     });
   })();
@@ -201,7 +198,7 @@ const Round = (function(){
 
 function main(){
   Round.startRound();
-  Round.switchPlayer();
+  console.log(Round.getCurrentPlayer().name + " starts first");
 }
 
 main();
