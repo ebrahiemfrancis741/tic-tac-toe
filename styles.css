@@ -33,6 +33,14 @@ body{
       grid-template-columns: 200px 200px 200px;
       grid-template-rows: 200px 200px 200px;
 
+      > div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 7rem;
+        color: rgb(233, 233, 233);
+      }
+
       > div:hover{
         background-color: rgb(42, 50, 73);
       }
