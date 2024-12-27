@@ -133,7 +133,8 @@ const UIManager = (function(){
   const setupEventHandlers = () =>{
     const gameBoardElement = document.querySelector(".game-board");
     gameBoardElement.addEventListener("click", (e)=>{
-      const cell = e.target;     
+      const cell = e.target;
+      console.log(cell);
     });
   }
 
