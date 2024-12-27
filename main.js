@@ -120,7 +120,10 @@ const gameBoard = (function(){
 
 const players = (function(){
   const createPlayer = (name, mark, score) =>{
-    return {name, mark, score};
+    const increaseScore = function(){
+      this.score++;
+    }
+    return {name, mark, score, increaseScore};
   }
   
   const player1 = createPlayer("player1", "x", 0);
@@ -139,6 +142,7 @@ const UIManager = (function(){
         gameBoard.grid[cellIndex] = Round.getCurrentPlayer().mark;
         cell.textContent = Round.getCurrentPlayer().mark;
         if(gameBoard.matchFound(Round.getCurrentPlayer())){
+          Round.getCurrentPlayer().increaseScore();
           console.log(Round.getCurrentPlayer().name + " is the winner");
         }
         Round.switchPlayer();
@@ -162,7 +166,6 @@ const Round = (function(){
 
   const getCurrentPlayer = () => currentPlayer;
   const getNumRounds = () => numRounds;
-
   const assignRandomMark = ()=>{
     if(Math.ceil(Math.random() * 2) == 1){
       players.player1.mark = "x";
