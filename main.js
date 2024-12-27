@@ -135,6 +135,8 @@ const UIManager = (function(){
 
   const setupEventHandlers = (() =>{
     const gameBoardElement = document.querySelector(".game-board");
+    const restartBtn = document.querySelector(".restart-btn");
+
     gameBoardElement.addEventListener("click", (e)=>{
       const cell = e.target;
       const cellIndex = cell.id.split("-")[1];
@@ -149,6 +151,10 @@ const UIManager = (function(){
         }
         Round.switchPlayer();
       }
+    });
+
+    restartBtn.addEventListener("click", (e)=>{
+      Round.startRound();     
     });
   })();
 

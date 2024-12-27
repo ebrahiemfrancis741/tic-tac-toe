@@ -24,6 +24,22 @@ body{
     color: black;
   }
 
+  > .restart-btn{
+    display: block;
+    margin: auto;
+    padding: 8px 24px 8px 24px;
+    border: 0;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+
+    &:hover{
+      background-color: black;
+      color: white;
+    }
+  }
+
+
   > .player-info-container{
     display: flex;
     justify-content: space-between;
@@ -32,18 +48,36 @@ body{
     > .player-info{
       display: flex;
       gap: 20px;
+      font-size: 2rem;
+
+      &:nth-child(1){
+        
+        >:nth-child(1){
+          color: green;
+        }
+      }
+
+      &:nth-child(2){
+        
+        >:nth-child(1){
+          color: red;
+        }
+      }
     }
   }
 
   > .announcements{
     margin: 24px 16px 24px 16px;
     text-align: center;
+    font-size: 1.5rem;
+    color: yellow;
   }
 
   .game-board-container{
     margin: auto;
     width: 600px;
     margin-top: 100px;
+    margin-bottom: 32px;
     > .game-board{
       display: grid;
       grid-template-columns: 200px 200px 200px;
