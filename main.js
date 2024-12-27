@@ -22,6 +22,12 @@ const gameBoard = (function(){
     return false;
   }
 
+  const resetGrid = ()=>{
+    for(let i = 0; i < grid.length; i++){
+      grid[i] = "";
+    }
+  }
+
   const matchFound = (player) =>{
     if(isHorizontalMatch(player) || isVerticalMatch(player) || isDiagonalMatch(player)){
       return true;
@@ -108,16 +114,36 @@ const gameBoard = (function(){
     }
   }
 
-  return {grid, markCell, isMarked, matchFound};
+  return {grid, markCell, isMarked, matchFound, resetGrid};
 
 })();
 
-function createPlayer(name, mark, score){
-  return {name, mark, score};
-}
+const players = (function(){
+  const createPlayer = (name, mark, score) =>{
+    return {name, mark, score};
+  }
+  
+  const player1 = createPlayer("player1", "X", 0);
+  const player2 = createPlayer("player2", "O", 0);
+  return {player1, player2};
+})();
+
+const UIManager = (function(){
+
+  const setupEventHandlers = () =>{
+    const gameBoardElement = document.querySelector(".game-board");
+    gameBoardElement.addEventListener("click", (e)=>{
+      const cell = e.target;     
+    });
+  }
+
+  return {setupEventHandlers};
+})();
+
+
 
 function main(){
-  console.log(gameBoard.grid);
+  UIManager.setupEventHandlers();
 }
 
 main();
