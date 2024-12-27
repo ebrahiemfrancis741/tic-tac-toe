@@ -14,6 +14,15 @@ const gameBoard = (function(){
     return true;
   }
 
+  const gridHasSpace = ()=>{
+    for(let i = 0; i < grid.length; i++){
+      if(grid[i] == ""){
+        return true;
+      }
+    }
+    return false;
+  }
+
   // this might not be needed
   const isMarkedByPlayer = (index, player) => {
     if(grid[index] == player.mark){
@@ -114,7 +123,7 @@ const gameBoard = (function(){
     }
   }
 
-  return {grid, markCell, isMarked, matchFound, resetGrid};
+  return {grid, markCell, isMarked, matchFound, resetGrid, gridHasSpace};
 
 })();
 
@@ -147,6 +156,10 @@ const UIManager = (function(){
           Round.getCurrentPlayer().increaseScore();
           announce(Round.getCurrentPlayer().name + " is the winner");
           updatePlayerInfo();
+          return;
+        }
+        if(!gameBoard.gridHasSpace()){
+          announce("This round is a draw!");
           return;
         }
         Round.switchPlayer();
