@@ -126,8 +126,8 @@ const players = (function(){
     return {name, mark, score, increaseScore};
   }
   
-  const player1 = createPlayer("player1", "x", 0);
-  const player2 = createPlayer("player2", "o", 0);
+  const player1 = createPlayer("player 1", "x", 0);
+  const player2 = createPlayer("player 2", "o", 0);
   return {player1, player2};
 })();
 
@@ -143,12 +143,31 @@ const UIManager = (function(){
         cell.textContent = Round.getCurrentPlayer().mark;
         if(gameBoard.matchFound(Round.getCurrentPlayer())){
           Round.getCurrentPlayer().increaseScore();
-          console.log(Round.getCurrentPlayer().name + " is the winner");
+          announce(Round.getCurrentPlayer().name + " is the winner");
+          updatePlayerInfo();
+          return;
         }
         Round.switchPlayer();
       }
     });
   })();
+
+  const announce = (message)=>{
+    let announceElement = document.querySelector(".announcements");
+    announceElement.textContent = message;
+  }
+
+
+  const updatePlayerInfo = ()=>{
+    const playerInfoContainer = document.querySelector(".player-info-container");
+    playerInfoContainer.children[0].children[0].textContent = players.player1.mark;
+    playerInfoContainer.children[0].children[1].textContent = players.player1.name;
+    playerInfoContainer.children[0].children[2].textContent = players.player1.score;
+
+    playerInfoContainer.children[1].children[0].textContent = players.player2.mark;
+    playerInfoContainer.children[1].children[1].textContent = players.player2.name;
+    playerInfoContainer.children[1].children[2].textContent = players.player2.score;
+  }
 
   const resetGridUI = ()=>{
     const gameBoardElement = document.querySelector(".game-board");
@@ -157,7 +176,7 @@ const UIManager = (function(){
     }
   }
 
-  return {setupEventHandlers, resetGridUI};
+  return {resetGridUI, announce, updatePlayerInfo};
 })();
 
 const Round = (function(){
@@ -186,6 +205,7 @@ const Round = (function(){
     else{
       currentPlayer = players.player1;
     }
+    UIManager.announce(`${getCurrentPlayer().name}'s turn`);
   }
 
   const startRound = () =>{
@@ -193,6 +213,8 @@ const Round = (function(){
     assignRandomMark();
     gameBoard.resetGrid();
     UIManager.resetGridUI();
+    UIManager.announce(`${getCurrentPlayer().name}'s turn`);
+    UIManager.updatePlayerInfo();
   }
 
   return {getNumRounds, getCurrentPlayer, startRound, switchPlayer};
