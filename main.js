@@ -9,9 +9,9 @@ const gameBoard = (function(){
 
   const isMarked = (index) => {
     if(grid[index] == ""){
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 
   // this might not be needed
@@ -130,38 +130,78 @@ const players = (function(){
 
 const UIManager = (function(){
 
-  const setupEventHandlers = () =>{
+  const setupEventHandlers = (() =>{
     const gameBoardElement = document.querySelector(".game-board");
     gameBoardElement.addEventListener("click", (e)=>{
       const cell = e.target;
-      console.log(cell);
+      const cellIndex = cell.id.split("-")[1];
+      console.log("cell id: " + cell.id + " " + cellIndex);
+      if( !gameBoard.isMarked(cellIndex)){
+        console.log("not marked");
+        cell.textContent = Round.getCurrentPlayer().mark;
+        console.log("before switch: " + Round.getCurrentPlayer().name + " " + Round.getCurrentPlayer().mark);
+        Round.switchPlayer();
+        console.log("after switch: " + Round.getCurrentPlayer().name + " " + Round.getCurrentPlayer().mark);
+      }
+      else{
+        console.log("marked for some reason");
+      }
     });
+  })();
+
+  const resetGridUI = ()=>{
+    const gameBoardElement = document.querySelector(".game-board");
+    for(let i = 0; i < gameBoardElement.children.length; i++){
+      gameBoardElement.children[i].textContent = "";
+    }
   }
 
-  return {setupEventHandlers};
+  return {setupEventHandlers, resetGridUI};
 })();
 
 const Round = (function(){
-  const numRounds = 0;
+  let numRounds = 0;
   let currentPlayer = players.player1;
+
+  const getCurrentPlayer = () => currentPlayer;
+  const getNumRounds = () => numRounds;
 
   const assignRandomMark = ()=>{
     if(Math.ceil(Math.random() * 2) == 1){
       players.player1.mark = "x";
       players.player2.mark = "o";
+      currentPlayer = players.player1;
     }
     else{
       players.player1.mark = "o";
       players.player2.mark = "x";
+      currentPlayer = players.player2;
     }
   }
 
-  return {numRounds, currentPlayer, assignRandomMark};
+  const switchPlayer = () =>{
+    if(currentPlayer == players.player1){
+      currentPlayer = players.player2;
+    }
+    else{
+      currentPlayer = players.player1;
+    }
+  }
+
+  const startRound = () =>{
+    numRounds++;
+    assignRandomMark();
+    gameBoard.resetGrid();
+    UIManager.resetGridUI();
+  }
+
+  return {getNumRounds, getCurrentPlayer, startRound, switchPlayer};
 
 })();
 
 function main(){
-  UIManager.setupEventHandlers();
+  Round.startRound();
+  Round.switchPlayer();
 }
 
 main();
