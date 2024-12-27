@@ -123,8 +123,8 @@ const players = (function(){
     return {name, mark, score};
   }
   
-  const player1 = createPlayer("player1", "X", 0);
-  const player2 = createPlayer("player2", "O", 0);
+  const player1 = createPlayer("player1", "x", 0);
+  const player2 = createPlayer("player2", "o", 0);
   return {player1, player2};
 })();
 
@@ -140,7 +140,24 @@ const UIManager = (function(){
   return {setupEventHandlers};
 })();
 
+const Round = (function(){
+  const numRounds = 0;
+  let currentPlayer = players.player1;
 
+  const assignRandomMark = ()=>{
+    if(Math.ceil(Math.random() * 2) == 1){
+      players.player1.mark = "x";
+      players.player2.mark = "o";
+    }
+    else{
+      players.player1.mark = "o";
+      players.player2.mark = "x";
+    }
+  }
+
+  return {numRounds, currentPlayer, assignRandomMark};
+
+})();
 
 function main(){
   UIManager.setupEventHandlers();
