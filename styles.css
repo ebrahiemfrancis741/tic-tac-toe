@@ -24,6 +24,22 @@ body{
     color: black;
   }
 
+  > .player-info-container{
+    display: flex;
+    justify-content: space-between;
+    margin: 24px 16px 24px 16px;
+    
+    > .player-info{
+      display: flex;
+      gap: 20px;
+    }
+  }
+
+  > .announcements{
+    margin: 24px 16px 24px 16px;
+    text-align: center;
+  }
+
   .game-board-container{
     margin: auto;
     width: 600px;
