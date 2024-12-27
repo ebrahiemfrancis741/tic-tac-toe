@@ -23,4 +23,27 @@ body{
     text-align: center;
     color: black;
   }
+
+  .game-board-container{
+    margin: auto;
+    width: 600px;
+    margin-top: 100px;
+    > .game-board{
+      display: grid;
+      grid-template-columns: 200px 200px 200px;
+      grid-template-rows: 200px 200px 200px;
+
+      > div:hover{
+        background-color: rgb(42, 50, 73);
+      }
+
+      > .rb{
+        border-right: 1px solid black;
+      }
+
+      > .bb{
+        border-bottom: 1px solid black;
+      }
+    }
+  }
 }
